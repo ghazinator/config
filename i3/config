@@ -5,7 +5,6 @@
 
 # ========== General Settings ==========
 set $mod Mod4
-# font pango:12
 font pango:monospace 12
 
 # ========== Startup Applications ==========
