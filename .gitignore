@@ -1,0 +1,11 @@
+# Ignore everything by default
+*
+
+# Except for the specific folders I want to back up
+!.gitignore
+!alacritty/
+!fontconfig/
+!i3/
+!i3blocks/
+!i3workspaces/
+!nvim/
