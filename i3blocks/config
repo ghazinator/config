@@ -1,0 +1,41 @@
+# i3 Blocks Config File
+# ========================================
+# For a complete reference: https://vivien.github.io/i3blocks/
+# ========================================
+align=center
+separator_block_width=20
+color=#DDDDDD
+
+[arch_update]
+command=for opt in "-Qq" "-Qqe" "-Qqu"; do pacman $opt | wc -l; done | xargs
+interval=once
+label=  
+
+[wifi]
+command=iwgetid -r | tr '\n' ' ' && grep $(iwgetid -m | awk '{ printf "%s", $1 }') /proc/net/wireless | awk '{ printf "%i%\n", int($3 * 100 / 70) }'
+interval=5
+label=  
+
+[brightness]
+command=~/.config/i3blocks/brightness
+interval=1
+label=󰃠  
+
+[volume]
+command=~/.config/i3blocks/volume
+interval=1
+label=  
+
+[battery]
+command=~/.config/i3blocks/battery
+interval=10
+label=󰁹 
+
+[date]
+command=date '+%A, %B %d %Y'
+interval=60
+
+[time]
+command=date '+%I:%M %p'
+interval=1
+

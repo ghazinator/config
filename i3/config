@@ -1,0 +1,148 @@
+# i3 Config File
+# ========================================
+# For a complete reference: https://i3wm.org/docs/userguide.html
+# ========================================
+
+# ========== General Settings ==========
+set $mod Mod4
+# font pango:12
+font pango:monospace 12
+
+# ========== Startup Applications ==========
+exec --no-startup-id feh --bg-fill ~/Downloads/laura-ockel-nIEHqGSymRU-unsplash.jpg
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+
+# ========== Application Shortcuts ==========
+bindsym $mod+Return exec alacritty
+bindsym $mod+b exec firefox --new-window
+bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-15"
+bindsym --release $mod+Shift+s exec flameshot gui
+bindsym $mod+o exec --no-startup-id ~/.config/scripts/load_workspaces.sh
+bindsym $mod+x exec /home/$USER/.config/scripts/lock
+
+# ========== Appearance and Layout ==========
+gaps inner 8
+default_border pixel 2
+default_floating_border pixel 2
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# ========== Brightness Controls ==========
+bindsym XF86MonBrightnessUp exec brightnessctl set +10
+bindsym XF86MonBrightnessDown exec brightnessctl set 10-
+
+# ========== Window Focus and Movement ==========
+# Focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+floating_modifier $mod
+
+# ========== Window Layouts ==========
+bindsym $mod+semicolon split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# ========== Window Tree Navigation =========
+bindsym $mod+a focus parent
+bindsym $mod+z focus child
+bindsym $mod+Shift+q kill
+
+# ========== Resize Mode ==========
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 1 px
+    bindsym Down resize grow height 1 px
+    bindsym Up resize shrink height 1 px
+    bindsym Right resize grow width 1 px
+    bindsym b exec "i3_balance_workspace"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# ========== Workspaces ==========
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws0 "0"
+
+# Workspace Switching
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws0
+bindsym $mod+n workspace next
+bindsym $mod+p workspace prev
+
+# Move Container to Workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws0
+
+# Move Workspace to Monitor and Focus
+bindsym $mod+Shift+greater move workspace to output DP-0; focus output DP-0
+bindsym $mod+Shift+less move workspace to output DP-4; focus output DP-4
+
+# Rename Workspaces on the fly
+bindsym $mod+i exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+
+# ========== Reload, Restart, and Exit ==========
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# ========== Status Bar ==========
+bar {
+    position top
+    tray_output none
+    status_command i3blocks -c ~/.config/i3blocks/config
+    padding 0px 9px 0px 0px
+}

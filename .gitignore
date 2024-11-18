@@ -1,8 +1,10 @@
-# Ignore everything by default
+# Ignore everything
 *
 
-# Except for the specific folders I want to back up
+# But not .gitignore
 !.gitignore
+
+# And not these folders
 !alacritty/
 !fontconfig/
 !i3/
