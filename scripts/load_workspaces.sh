@@ -9,7 +9,8 @@ load_workspace_0() {
     i3-msg 'workspace "0"'
     i3-msg 'append_layout ~/.config/i3workspaces/workspace_0.json'
 
-    (firefox --new-window https://wiki.archlinux.org/title/Main_page &)
+    (firefox https://github.com/ghazinator/config \
+        https://wiki.archlinux.org/title/Main_page &)
     (alacritty -e bash -c "nvim ~/.config/i3/config \
                ~/.config/scripts/load_workspaces.sh \
                             ~/.config/nvim/init.vim \
@@ -28,7 +29,6 @@ load_workspace_1() {
     i3-msg 'append_layout ~/.config/i3workspaces/workspace_1.json'
 
     (discord &)
-    (firefox --new-window https://web.whatsapp.com/ &)
     sleep 0.1
     i3-msg 'rename workspace 1 to "1: chat"'
 }
@@ -43,60 +43,6 @@ load_workspace_2() {
     https://www.reddit.com/ https://bsky.app/ &)
     sleep 0.1
     i3-msg 'rename workspace 2 to "2: www"'
-}
-
-load_workspace_3() {
-    i3-msg '[workspace="3"] kill'
-    i3-msg '[workspace="3: batoul"] kill'
-    i3-msg 'workspace "3"'
-    i3-msg 'append_layout ~/.config/i3workspaces/workspace_3.json'
-
-    (firefox https://gemini.google.com/app/595e90b03bf9c806 \
-        https://gemini.google.com/\
-        https://www.wikipedia.org/ &)
-    sleep 0.1
-    (xdg-open ~/Batoul/A3/A3-2024.docx &)
-    sleep 0.1
-    (xdg-open ~/Batoul/A3/A3Q2SampleMaxHeap.docx &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/Template/. && \
-        nvim makefile a3q2_main.c a3q2_functions.c \
-        a3q2_header.h; $SHELL" &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/Template/. && tree; $SHELL" &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/. &&  \
-        cat f.dat; $SHELL" &)
-    sleep 0.1
-
-    i3-msg 'rename workspace 3 to "3: batoul"'
-}
-
-load_workspace_4() {
-    i3-msg '[workspace="4"] kill'
-    i3-msg '[workspace="4: batoul"] kill'
-    i3-msg 'workspace "4"'
-    i3-msg 'append_layout ~/.config/i3workspaces/workspace_3.json'
-
-    (firefox https://gemini.google.com/app/595e90b03bf9c806 \
-        https://gemini.google.com/\
-        https://www.wikipedia.org/ &)
-    sleep 0.1
-    (xdg-open ~/Batoul/A3/A3-2024.docx &)
-    sleep 0.1
-    (xdg-open ~/Batoul/A3/A3Q2SampleMaxHeap.docx &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/Template/. && \
-        nvim makefile a3q1_main.c a3q1_functions.c \
-        a3q1_header.h; $SHELL" &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/Template/. && tree; $SHELL" &)
-    sleep 0.1
-    (alacritty -e bash -c "cd Batoul/A3/. &&  \
-        cat A3Q1_Tree_Traverasal_Output.txt; $SHELL" &)
-    sleep 0.1
-
-    i3-msg 'rename workspace 4 to "4: batoul"'
 }
 
 load_workspace_9() {

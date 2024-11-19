@@ -10,31 +10,36 @@ font pango:monospace 12
 # ========== Startup Applications ==========
 exec --no-startup-id feh --bg-fill ~/Downloads/laura-ockel-nIEHqGSymRU-unsplash.jpg
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # ========== Application Shortcuts ==========
 bindsym $mod+Return exec alacritty
 bindsym $mod+b exec firefox --new-window
-bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-15"
+bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-12"
 bindsym --release $mod+Shift+s exec flameshot gui
 bindsym $mod+o exec --no-startup-id ~/.config/scripts/load_workspaces.sh
 bindsym $mod+x exec /home/$USER/.config/scripts/lock
 
 # ========== Appearance and Layout ==========
-gaps inner 8
 default_border pixel 2
 default_floating_border pixel 2
+gaps inner 8
+
+# Border Colors
+client.focused          #4c7899 #285577 #ffffff #285577   #285577
+client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # ========== Brightness Controls ==========
@@ -140,8 +145,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # ========== Status Bar ==========
 bar {
+    status_command i3blocks -c ~/.config/i3blocks/config
     position top
     tray_output none
-    status_command i3blocks -c ~/.config/i3blocks/config
     padding 0px 9px 0px 0px
 }
+
