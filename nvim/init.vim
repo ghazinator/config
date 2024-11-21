@@ -13,14 +13,17 @@ call plug#begin()
     Plug 'lambdalisue/fern.vim'
     Plug 'jiangmiao/auto-pairs'
     Plug 'tpope/vim-commentary'
-
+    Plug 'lervag/vimtex'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
+let g:vimtex_view_automatic = 0
+
 set termguicolors
 colorscheme habamax
+highlight Normal ctermbg=NONE guibg=NONE
 let g:netrw_banner=0
 
 " Find files using Telescope command-line sugar.

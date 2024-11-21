@@ -24,7 +24,7 @@ bindsym $mod+x exec /home/$USER/.config/scripts/lock
 # ========== Appearance and Layout ==========
 default_border pixel 2
 default_floating_border pixel 2
-gaps inner 8
+gaps inner 0
 
 # Border Colors
 client.focused          #4c7899 #285577 #ffffff #285577   #285577
@@ -134,6 +134,9 @@ bindsym $mod+Shift+0 move container to workspace number $ws0
 # Move Workspace to Monitor and Focus
 bindsym $mod+Shift+greater move workspace to output DP-0; focus output DP-0
 bindsym $mod+Shift+less move workspace to output DP-4; focus output DP-4
+
+# Swap Monitor Workspaces
+bindsym $mod+Shift+t exec ~/.config/scripts/swap_workspaces.sh
 
 # Rename Workspaces on the fly
 bindsym $mod+i exec i3-input -F 'rename workspace to "%s"' -P 'New name: '

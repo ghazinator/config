@@ -6,5 +6,5 @@ case "$BLOCK_BUTTON" in
       5) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
 esac
 
-pactl get-sink-volume @DEFAULT_SINK@ | awk '/%/ { printf "%d%%", int($5 * 1) }' \
+pactl get-sink-volume @DEFAULT_SINK@ | awk '/%/ { printf "%d%%", int($5) }' \
     && pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes && echo " [Muted]" || echo ""
