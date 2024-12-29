@@ -9,7 +9,7 @@
        "y": 0
     },
     "marks": [],
-    "name": "ArchWiki — Mozilla Firefox",
+    "name": null,
     "percent": 0.6,
     "swallows": [
        {
@@ -38,7 +38,7 @@
                "y": 0
             },
             "marks": [],
-            "name": "Alacritty",
+            "name": null,
             "percent": 0.6,
             "swallows": [
                {
@@ -58,7 +58,7 @@
                "y": 0
             },
             "marks": [],
-            "name": "ghazi@archlinux:~/.config/i3workspaces",
+            "name": null,
             "percent": 0.4,
             "swallows": [
                {

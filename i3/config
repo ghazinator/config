@@ -8,18 +8,22 @@ set $mod Mod4
 font pango:monospace 12
 
 # ========== Startup Applications ==========
-exec --no-startup-id feh --bg-fill ~/Downloads/laura-ockel-nIEHqGSymRU-unsplash.jpg
+set $lockscreen ~/.config/scripts/lock
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id nm-applet
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $lockscreen --nofork
+exec --no-startup-id ~/.config/scripts/background.sh
 
 # ========== Application Shortcuts ==========
+bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-14"
 bindsym $mod+Return exec alacritty
 bindsym $mod+b exec firefox --new-window
-bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-12"
 bindsym --release $mod+Shift+s exec flameshot gui
+bindsym $mod+c exec --no-startup-id ~/.config/scripts/background.sh
 bindsym $mod+o exec --no-startup-id ~/.config/scripts/load_workspaces.sh
-bindsym $mod+x exec /home/$USER/.config/scripts/lock
+bindsym $mod+x exec --no-startup-id $lockscreen
+
+bindsym $mod+Shift+Return exec --no-startup-id alacritty -t 'alacritty-float'
+for_window [title="alacritty-float"] floating enable, move position center
 
 # ========== Appearance and Layout ==========
 default_border pixel 2
@@ -31,20 +35,24 @@ client.focused          #4c7899 #285577 #ffffff #285577   #285577
 client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+# ========== Volume Controls ==========
+set $volume_up pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+11 i3blocks
+set $volume_down pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+11 i3blocks
+set $volume_toggle pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+11 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id $volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id $volume_down
+bindsym XF86AudioMute exec --no-startup-id $volume_toggle
 
+# ========== Media Controls ==========
 bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 
 # ========== Brightness Controls ==========
-bindsym XF86MonBrightnessUp exec brightnessctl set +10
-bindsym XF86MonBrightnessDown exec brightnessctl set 10-
+set $brightness_up brightnessctl set +10% && pkill -SIGRTMIN+10 i3blocks
+set $brightness_down brightnessctl set 10%- && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86MonBrightnessUp exec --no-startup-id $brightness_up
+bindsym XF86MonBrightnessDown exec --no-startup-id $brightness_down   
 
 # ========== Window Focus and Movement ==========
 # Focus
@@ -116,8 +124,8 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws0
-bindsym $mod+n workspace next
-bindsym $mod+p workspace prev
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 
 # Move Container to Workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1

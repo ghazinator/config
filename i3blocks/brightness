@@ -1,8 +1,8 @@
 #!/bin/bash
 
-case $BLOCK_BUTTON in
-  4) brightnessctl set +5 ;;
-  5) brightnessctl set 5- ;;
+case "$BLOCK_BUTTON" in
+    4) brightnessctl set +5 > /dev/null 2>&1;;
+    5) brightnessctl set 5- > /dev/null 2>&1;;
 esac
 
-cat /sys/class/backlight/nvidia_0/brightness | awk '{print $1 "%"}'
+sed "s/$/%/" /sys/class/backlight/nvidia_0/brightness

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 case "$BLOCK_BUTTON" in
-      2) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
-      4) pactl set-sink-volume @DEFAULT_SINK@ +5% ;;
-      5) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
+    2) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+    4) pactl set-sink-volume @DEFAULT_SINK@ +5% ;;
+    5) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
 esac
 
 pactl get-sink-volume @DEFAULT_SINK@ | awk '/%/ { printf "%d%%", int($5) }' \

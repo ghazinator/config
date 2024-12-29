@@ -2,8 +2,12 @@
 size = 10.0
 
 [window]
-    padding = { x = 2, y = 2 }
+    # padding = { x = 2, y = 2 }
     dynamic_padding = true
+    dynamic_title = true
 
 [env]
     WINIT_X11_SCALE_FACTOR = "1.0"
+
+[colors.primary]
+    background = "#1C1C1C"
