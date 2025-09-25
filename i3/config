@@ -187,3 +187,8 @@ bar {
     tray_padding 4
 }
 
+# ======== CAPSLOCK Indicator ========
+mode "CAPSLOCK" {
+    bindsym Caps_Lock mode "default"
+}
+bindsym Caps_Lock mode "CAPSLOCK"
