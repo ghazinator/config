@@ -10,22 +10,16 @@ set noswapfile
 set scrolloff=5 mouse=a
 set wildmenu wildoptions=pum
 
-call plug#begin()
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'tpope/vim-commentary'
-    Plug 'lervag/vimtex'
-call plug#end()
-
 let g:vimtex_view_automatic = 0
 
 set termguicolors
 colorscheme habamax
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+call plug#begin()
+    Plug 'mbbill/undotree'
+call plug#end()
+
+nnoremap <leader>u :UndotreeToggle<CR>
 
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
@@ -35,3 +29,16 @@ nnoremap <C-n> :set nonu! nornu! <CR>
 nnoremap <C-tab> :setlocal formatoptions+=a <CR>
 autocmd InsertEnter,WinLeave * if &number | set nornu | endif
 autocmd InsertLeave,WinEnter * if &number | set rnu | endif
+
+if has("persistent_undo")
+   let target_path = expand('~/.undodir')
+
+    " create the directory and any parent directories
+    " if the location does not exist.
+    if !isdirectory(target_path)
+        call mkdir(target_path, "p", 0700)
+    endif
+
+    let &undodir=target_path
+    set undofile
+endif

@@ -1,67 +1,97 @@
-# i3 Config File
-# ========================================
-# For a complete reference: https://i3wm.org/docs/userguide.html
-# ========================================
+# i3 Config (cleaned)
+# Reference: https://i3wm.org/docs/userguide.html
 
-# ========== General Settings ==========
+# ========== General ==========
 set $mod Mod4
-font pango:monospace 12
+font pango:monospace 6
 
-# ========== Startup Applications ==========
-set $lockscreen ~/.config/scripts/lock
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- $lockscreen --nofork
-exec --no-startup-id ~/.config/scripts/background.sh
+# Common vars
+set $term        alacritty
+set $menu        dmenu_run -fn "monospace-8"
+set $browser     firefox
+set $files       pcmanfm
+set $discord     discord
+set $screenshot  flameshot gui
+set $locker      ~/.config/i3/lockscreen.sh
+set $picomconf   ~/.config/picom/picom.conf
+set $wallpaper   ~/Pictures/Wallpapers/laura-ockel-wafer.jpg
 
-# ========== Application Shortcuts ==========
-bindsym $mod+d exec --no-startup-id dmenu_run -fn "monospace-14"
-bindsym $mod+Return exec alacritty
-bindsym $mod+b exec firefox --new-window
-bindsym --release $mod+Shift+s exec flameshot gui
-bindsym $mod+c exec --no-startup-id ~/.config/scripts/background.sh
-bindsym $mod+o exec --no-startup-id ~/.config/scripts/load_workspaces.sh
-bindsym $mod+x exec --no-startup-id $lockscreen
+set $sig_volume     
 
-bindsym $mod+Shift+Return exec --no-startup-id alacritty -t 'alacritty-float'
+# Screen blanking / DPMS
+exec --no-startup-id xset s off -dpms
+
+# ========== Autostart ==========
+# Notifications & helpers
+exec --no-startup-id dunst
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $locker --nofork
+exec --no-startup-id kdeconnectd
+
+# Visual/compositor/wallpaper
+exec --no-startup-id picom --config $picomconf
+exec --no-startup-id openrgb -p "kb-darkred"
+exec_always --no-startup-id feh --bg-scale $wallpaper
+exec_always --no-startup-id autorandr --change
+
+# ========== Launchers ==========
+bindsym $mod+d         exec $menu
+bindsym $mod+Return    exec $term
+bindsym $mod+b         exec $browser
+bindsym $mod+Shift+f   exec $files
+bindsym $mod+Shift+d   exec $discord
+bindsym $mod+Shift+s   exec $screenshot
+bindsym $mod+x         exec $locker
+
+# Scratchpad quick term
+bindsym $mod+Shift+grave move scratchpad
+bindsym $mod+grave scratchpad show
+
+bindsym $mod+Shift+Return exec $term -t 'alacritty-float'
 for_window [title="alacritty-float"] floating enable, move position center
 
-# ========== Appearance and Layout ==========
+# Dunst controls
+bindsym $mod+n         exec dunstctl set-paused toggle
+bindsym $mod+Shift+n   exec dunstctl history-pop
+
+# Autorandr quick cycle
+bindsym $mod+Shift+m   exec autorandr --cycle
+
+# ========== Appearance & Layout ==========
 default_border pixel 2
 default_floating_border pixel 2
-gaps inner 0
+hide_edge_borders smart
+gaps inner 5
+smart_gaps on
 
-# Border Colors
-client.focused          #4c7899 #285577 #ffffff #285577   #285577
-client.focused_inactive #333333 #222222 #888888 #292d2e   #222222
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# Borders
+client.focused          #4c7899 #285577 #ffffff #336d99   #265273
+client.focused_inactive #333333 #5f676a #ffffff #61686b   #494e50
 
-# ========== Volume Controls ==========
-set $volume_up pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+11 i3blocks
-set $volume_down pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+11 i3blocks
-set $volume_toggle pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -SIGRTMIN+11 i3blocks
+# ========== Brightness ==========
+set $brightness_up   brightnessctl set +10% && pkill -RTMIN+10 i3blocks
+set $brightness_down brightnessctl set 10%- && pkill -RTMIN+10 i3blocks
+bindsym XF86MonBrightnessUp   exec --no-startup-id $brightness_up
+bindsym XF86MonBrightnessDown exec --no-startup-id $brightness_down
+
+# ========== Volume / Media ==========
+set $volume_up     pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+11 i3blocks
+set $volume_down   pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+11 i3blocks
+set $volume_toggle pactl set-sink-mute   @DEFAULT_SINK@ toggle && $sig_volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id $volume_up
 bindsym XF86AudioLowerVolume exec --no-startup-id $volume_down
-bindsym XF86AudioMute exec --no-startup-id $volume_toggle
+bindsym XF86AudioMute        exec --no-startup-id $volume_toggle
 
-# ========== Media Controls ==========
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext  exec --no-startup-id playerctl next
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
+bindsym XF86AudioStop  exec --no-startup-id playerctl stop
 
-# ========== Brightness Controls ==========
-set $brightness_up brightnessctl set +10% && pkill -SIGRTMIN+10 i3blocks
-set $brightness_down brightnessctl set 10%- && pkill -SIGRTMIN+10 i3blocks
-bindsym XF86MonBrightnessUp exec --no-startup-id $brightness_up
-bindsym XF86MonBrightnessDown exec --no-startup-id $brightness_down   
-
-# ========== Window Focus and Movement ==========
-# Focus
+# ========== Focus / Move / Split ==========
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Move
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
@@ -69,32 +99,35 @@ bindsym $mod+Shift+l move right
 
 floating_modifier $mod
 
-# ========== Window Layouts ==========
 bindsym $mod+semicolon split h
 bindsym $mod+v split v
-bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+
+bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
-# ========== Window Tree Navigation =========
+# Tree nav
 bindsym $mod+a focus parent
 bindsym $mod+z focus child
-bindsym $mod+Shift+q kill
 
-# ========== Resize Mode ==========
+# Kill
+bindsym $mod+Shift+q kill
+bindsym --whole-window $mod+button2 kill
+
+# ========== Resize mode ==========
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
-    bindsym Left resize shrink width 1 px
-    bindsym Down resize grow height 1 px
-    bindsym Up resize shrink height 1 px
-    bindsym Right resize grow width 1 px
-    bindsym b exec "i3_balance_workspace"
+    bindsym h     resize shrink width  10 px or 10 ppt
+    bindsym j     resize grow   height 10 px or 10 ppt
+    bindsym k     resize shrink height 10 px or 10 ppt
+    bindsym l     resize grow   width  10 px or 10 ppt
+    bindsym Left  resize shrink width  1 px
+    bindsym Down  resize grow   height 1 px
+    bindsym Up    resize shrink height 1 px
+    bindsym Right resize grow   width  1 px
+    bindsym b     exec "i3_balance_workspace"
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
@@ -113,7 +146,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws0 "0"
 
-# Workspace Switching
+# Go to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -124,10 +157,8 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws0
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
 
-# Move Container to Workspace
+# Move container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -139,26 +170,20 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws0
 
-# Move Workspace to Monitor and Focus
-bindsym $mod+Shift+greater move workspace to output DP-0; focus output DP-0
-bindsym $mod+Shift+less move workspace to output DP-4; focus output DP-4
+# Multi-monitor helpers
+bindsym $mod+m          move workspace to output next
+bindsym $mod+Shift+t    exec --no-startup-id ~/.config/i3/swap_workspaces.sh
+bindsym $mod+i          exec --no-startup-id i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
-# Swap Monitor Workspaces
-bindsym $mod+Shift+t exec ~/.config/scripts/swap_workspaces.sh
-
-# Rename Workspaces on the fly
-bindsym $mod+i exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
-
-# ========== Reload, Restart, and Exit ==========
+# ========== Session control ==========
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# ========== Status Bar ==========
+# ========== Bar ==========
 bar {
     status_command i3blocks -c ~/.config/i3blocks/config
-    position top
-    tray_output none
-    padding 0px 9px 0px 0px
+    tray_output primary
+    tray_padding 4
 }
 

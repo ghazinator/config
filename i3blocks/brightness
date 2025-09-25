@@ -1,8 +1,0 @@
-#!/bin/bash
-
-case "$BLOCK_BUTTON" in
-    4) brightnessctl set +5 > /dev/null 2>&1;;
-    5) brightnessctl set 5- > /dev/null 2>&1;;
-esac
-
-sed "s/$/%/" /sys/class/backlight/nvidia_0/brightness

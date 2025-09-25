@@ -3,47 +3,43 @@
 # For a complete reference: https://vivien.github.io/i3blocks/
 # ========================================
 align=center
-separator_block_width=20
-color=#DDDDDD
-
-# [i3-focusedwindow]
-# # label=[]= 
-# command=~/.config/i3blocks/i3-focusedwindow
-# interval=persist
-
-[arch_update]
-command=for opt in "-Qq" "-Qqe" "-Qqu"; do pacman $opt | wc -l; done | xargs
-# command=pacman -Qqu | wc -l
-interval=once
-label=  
+separator_block_width=15
+color=#FFFFFF
 
 [wifi]
-command=iwgetid -r | tr '\n' ' ' && awk '/wlan0/ { printf "%i%\n", int($3 * 100 / 70) }' /proc/net/wireless
-interval=60
-label=  
-
-[brightness]
-command=~/.config/i3blocks/brightness
-signal=10
-interval=once
-label=󰃠  
-
-[volume]
-command=~/.config/i3blocks/volume
-signal=11
-interval=once
-label=  
-
-[battery]
-command=~/.config/i3blocks/battery
-interval=60
-label=󰁹 
-
-[date]
-command=date '+%A, %B %d %Y'
-interval=60
-
-[time]
-command=date '+%I:%M %p'
+command= ~/.config/i3blocks/wifi.sh
 interval=5
 
+[ethernet]
+command= ~/.config/i3blocks/ethernet.sh
+interval=5
+
+[volume]
+command= ~/.config/i3blocks/volume.sh
+interval=5
+signal=11
+
+[brightness]
+command= ~/.config/i3blocks/brightness.sh
+interval=5
+signal=10
+
+[battery]
+command= ~/.config/i3blocks/battery.sh
+interval=5
+
+[storage]
+command= ~/.config/i3blocks/storage.sh
+interval=5
+
+[load]
+command= ~/.config/i3blocks/load.sh
+interval=5
+
+[memory]
+command= ~/.config/i3blocks/memory.sh
+interval=5
+
+[time]
+command=date '+%F %H:%M'
+interval=5
