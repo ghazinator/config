@@ -1,22 +1,5 @@
 #!/bin/bash
 
-# Handle scroll to switch workspaces without looping
-# case "$BLOCK_BUTTON" in
-#   4) # scroll up = prev
-#      current=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')
-#      if [ "$current" -gt 0 ]; then
-#        i3-msg workspace number $((current-1)) >/dev/null
-#      fi
-#      ;;
-#   5) # scroll down = next
-#      current=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')
-#      last=$(i3-msg -t get_workspaces | jq '[.[].num] | max')
-#      if [ "$current" -lt "$last" ]; then
-#        i3-msg workspace number $((current+1)) >/dev/null
-#      fi
-#      ;;
-# esac
-
 # Auto-detect Wi-Fi interface
 iface=$(iw dev 2>/dev/null | awk '$1=="Interface"{print $2; exit}')
 [ -z "$iface" ] && iface="wlan0"  # fallback

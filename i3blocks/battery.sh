@@ -12,6 +12,8 @@ elif [[ $status == "Discharging" ]]; then
     label="DIS"
 elif [[ $status == "Full" ]]; then
     label="FULL"
+elif [[ $status == "Not charging" ]]; then
+    label="FULL"
 else
     label="UNK"
 fi
