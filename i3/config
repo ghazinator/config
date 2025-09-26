@@ -16,8 +16,6 @@ set $locker      ~/.config/i3/lockscreen.sh
 set $picomconf   ~/.config/picom/picom.conf
 set $wallpaper   ~/Pictures/Wallpapers/laura-ockel-wafer.jpg
 
-set $sig_volume     
-
 # Screen blanking / DPMS
 exec --no-startup-id xset s off -dpms
 
@@ -68,15 +66,13 @@ client.focused          #4c7899 #285577 #ffffff #336d99   #265273
 client.focused_inactive #333333 #5f676a #ffffff #61686b   #494e50
 
 # ========== Brightness ==========
-set $brightness_up   brightnessctl set +10% && pkill -RTMIN+10 i3blocks
-set $brightness_down brightnessctl set 10%- && pkill -RTMIN+10 i3blocks
-bindsym XF86MonBrightnessUp   exec --no-startup-id $brightness_up
-bindsym XF86MonBrightnessDown exec --no-startup-id $brightness_down
+bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
 # ========== Volume / Media ==========
-set $volume_up     pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -SIGRTMIN+11 i3blocks
-set $volume_down   pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -SIGRTMIN+11 i3blocks
-set $volume_toggle pactl set-sink-mute   @DEFAULT_SINK@ toggle && $sig_volume
+set $volume_up     pactl set-sink-volume @DEFAULT_SINK@ +5%
+set $volume_down   pactl set-sink-volume @DEFAULT_SINK@ -5%
+set $volume_toggle pactl set-sink-mute   @DEFAULT_SINK@ toggle
 bindsym XF86AudioRaiseVolume exec --no-startup-id $volume_up
 bindsym XF86AudioLowerVolume exec --no-startup-id $volume_down
 bindsym XF86AudioMute        exec --no-startup-id $volume_toggle
@@ -157,6 +153,8 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws0
+bindsym $mod+greater workspace next
+bindsym $mod+less workspace prev
 
 # Move container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -182,9 +180,11 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # ========== Bar ==========
 bar {
-    status_command i3blocks -c ~/.config/i3blocks/config
+    # status_command i3blocks -c ~/.config/i3blocks/config
+    status_command i3status
     tray_output primary
     tray_padding 4
+    padding 0px 2px 0px 0px
 }
 
 # ======== CAPSLOCK Indicator ========
