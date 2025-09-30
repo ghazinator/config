@@ -130,6 +130,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+bindsym $mod+p exec --no-startup-id ~/.config/i3/resize_ratio.sh 9 16
+bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/resize_ratio.sh 16 9
 # ========== Workspaces ==========
 set $ws1 "1"
 set $ws2 "2"
