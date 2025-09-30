@@ -124,14 +124,14 @@ mode "resize" {
     bindsym Up    resize shrink height 1 px
     bindsym Right resize grow   width  1 px
     bindsym b     exec "i3_balance_workspace"
+    bindsym p exec --no-startup-id ~/.config/i3/resize_ratio.sh 9 16
+    bindsym Shift+p exec --no-startup-id ~/.config/i3/resize_ratio.sh 16 9
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
 
-bindsym $mod+p exec --no-startup-id ~/.config/i3/resize_ratio.sh 9 16
-bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/resize_ratio.sh 16 9
 # ========== Workspaces ==========
 set $ws1 "1"
 set $ws2 "2"
