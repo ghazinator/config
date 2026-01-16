@@ -1,1 +1,1 @@
-Switched to omarchy :) will upload configs when I'm settled
+My customizations to the default Omarchy config :)
