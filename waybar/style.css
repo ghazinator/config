@@ -77,6 +77,12 @@ tooltip {
   color: #a55555;
 }
 
+#custom-privacy-dots {
+  padding: 0 12px;
+  font-size: 8px;
+  letter-spacing: 4px;
+}
+
 #battery.warning,
 #load.warning,
 #memory.warning,
