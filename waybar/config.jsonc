@@ -192,11 +192,11 @@
     },
     "on-click": "omarchy-launch-or-focus-tui btop"
   },
-  "custom/clock": {
+"custom/clock": {
     "format": "{}",
     "interval": 1,
-    "exec": "ZONES=('America/New_York' 'Asia/Amman' 'America/Vancouver'); ID=$(cat /tmp/waybar_tz_idx || echo 0); TZ=${ZONES[$ID]} date +'%Y-%m-%d %H:%M %Z'",
-    "on-click": "ID=$(cat /tmp/waybar_tz_idx || echo 0); echo $(( (ID + 1) % 3 )) > /tmp/waybar_tz_idx",
+    "exec": "ZONES=('America/New_York' 'Europe/Rome' 'Asia/Amman' 'America/Vancouver'); ID=$(cat /tmp/waybar_tz_idx || echo 0); TZ=${ZONES[$ID]} date +'%Y-%m-%d %H:%M %Z'",
+    "on-click": "ID=$(cat /tmp/waybar_tz_idx || echo 0); echo $(( (ID + 1) % 4 )) > /tmp/waybar_tz_idx",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
     "tooltip": false
   },
