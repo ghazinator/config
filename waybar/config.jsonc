@@ -195,11 +195,11 @@
 "custom/clock": {
     "format": "{}",
     "interval": 1,
-    "exec": "ZONES=('America/New_York' 'Europe/Rome' 'Asia/Amman' 'America/Vancouver'); ID=$(cat /tmp/waybar_tz_idx || echo 0); TZ=${ZONES[$ID]} date +'%Y-%m-%d %H:%M %Z'",
-    "on-click": "ID=$(cat /tmp/waybar_tz_idx || echo 0); echo $(( (ID + 1) % 4 )) > /tmp/waybar_tz_idx",
+    "exec": "ZONES=('America/New_York' 'UTC' 'Europe/Rome' 'Asia/Amman' 'America/Vancouver'); ID=$(cat /tmp/waybar_tz_idx || echo 0); TZ=${ZONES[$ID]} date +'%a %Y-%m-%d %H:%M %Z'",
+    "on-click": "ID=$(cat /tmp/waybar_tz_idx || echo 0); echo $(( (ID + 1) % 5 )) > /tmp/waybar_tz_idx",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
     "tooltip": false
-  },
+},
   "custom/privacy-dots": { // install through aur "privacy-dots"
     "exec": "privacy-dots",
     "return-type": "json",
